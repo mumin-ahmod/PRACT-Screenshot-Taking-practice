@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 
 void main() {
   runApp(const MyApp());
@@ -71,24 +74,45 @@ class _HomePageState extends State<HomePage> {
           onPressed: (){
             screenshotController.capture().then((var image) {
               print("PICKED IMAGE: ${image}");
-              var alert = AlertDialog(
+
+                //
+                // shareImage(var image) async{
+                //
+                // }
+
+                var alert = AlertDialog(
                   content: Card(
                     child: Image.memory(image!),
                   ),
                   actions: [
-                    TextButton(onPressed: (){
-                      Navigator.pop(context);
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Cancel"),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        final directory =
+                            await getApplicationDocumentsDirectory();
+                        final imagePath =
+                            await File('${directory.path}/image.png').create();
+                        await imagePath.writeAsBytes(image);
 
-                      }, child: Text("Cancel"),),
+                        /// Share Plugin
+                        await Share.shareFiles([imagePath.path]);
+                      },
+                      child: Text("Share"),
+                    ),
                   ],
-                );
+              );
 
-              return showDialog(context: context,
+                return showDialog(context: context,
                   builder: (BuildContext context){
-                return alert;
+                    return alert;
                   }
 
-                  );
+              );
             },
 
 
