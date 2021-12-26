@@ -1,6 +1,8 @@
-# ss_pract_2
+# ss_pract_2   
 
-A new Flutter project.
+Learn how to take Screenshot with Flutter and add a share button to share it on different apps.
+
+- [HOW TO TAKE A SCREENSHOT WITH FLUTTER ATRICLE](https://mumin-ahmod.medium.com/how-to-take-screenshot-with-flutter-52db49e51ef7)
 
 ## Getting Started
 
